@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 String NewTaskName = AddTaskEditText.getText().toString();
+                if (NewTaskName.length() < 1) {return true;}
                 AddTaskEditText.getText().clear();
                 removeFocusFromAddTaskEditText(v);
                 CheckBox NewCheckBox = new CheckBox(CheckBoxLinearLayout.getContext());
@@ -119,6 +120,8 @@ public class MainActivity extends Activity {
         SharedPreferences AppDataSharedPreferences =
                 getSharedPreferences(MainAppDataFileName, Context.MODE_PRIVATE);
         SharedPreferences.Editor AppDataEditor = AppDataSharedPreferences.edit();
+        AppDataEditor.clear();
+        AppDataEditor.commit();
         int KeyCount = 0;
         for (Task T: MainTaskData.getToDoList()) {
             AppDataEditor.putString(MessageFormat.format("{0}", KeyCount),
